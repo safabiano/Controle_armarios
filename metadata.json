@@ -1,0 +1,6 @@
+{
+  "name": "Controle de Armários de Vestiário",
+  "description": "Sistema completo para controle e cadastro de armários de vestiários masculino e feminino com gestão de ocupação, empresa, contato, datas de entrega e devolução.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
