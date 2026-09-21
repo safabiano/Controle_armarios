@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Locker, FilterStatus, FilterVestiario, ViewMode, AllocationHistoryItem } from './types';
 import { loadLockersFromStorage, saveLockersToStorage } from './utils/lockerUtils';
-import { INITIAL_LOCKERS } from './data/initialLockers';
 import { Header } from './components/Header';
 import { StatCards } from './components/StatCards';
 import { FilterBar } from './components/FilterBar';
@@ -169,12 +168,6 @@ export default function App() {
     }
   };
 
-  const handleResetData = () => {
-    if (window.confirm('Deseja reiniciar a base com os armários e cadastros de exemplo originais?')) {
-      setLockers(INITIAL_LOCKERS);
-    }
-  };
-
   const handleImportData = (imported: Locker[]) => {
     setLockers(imported);
   };
@@ -189,7 +182,6 @@ export default function App() {
           setEditModalLocker(null);
           setIsCreateModalOpen(true);
         }}
-        onResetData={handleResetData}
         onImportData={handleImportData}
       />
 
