@@ -159,12 +159,23 @@ export default function App() {
   const handleDeleteLocker = (lockerId: string) => {
     const l = lockers.find((item) => item.id === lockerId);
     if (!l) return;
+    
     if (l.status === 'OCUPADO') {
-      alert('Não é possível excluir um armário ocupado. Registre a devolução antes de excluir.');
-      return;
+      const confirmOccupied = window.confirm(
+        `Atenção: O armário ${l.number} está atualmente marcado como OCUPADO por ${l.currentAllocation?.occupantName || l.currentAllocation?.companyName || 'colaborador'}.\n\nDeseja realmente excluir este armário e todas as informações vinculadas?`
+      );
+      if (!confirmOccupied) return;
+    } else {
+      if (!window.confirm(`Tem certeza de que deseja excluir o armário ${l.number}?`)) {
+        return;
+      }
     }
-    if (window.confirm(`Tem certeza de que deseja excluir o armário ${l.number}?`)) {
-      setLockers((prev) => prev.filter((item) => item.id !== lockerId));
+
+    setLockers((prev) => prev.filter((item) => item.id !== lockerId));
+    if (detailsModalLocker?.id === lockerId) setDetailsModalLocker(null);
+    if (editModalLocker?.id === lockerId) {
+      setEditModalLocker(null);
+      setIsCreateModalOpen(false);
     }
   };
 
@@ -317,6 +328,7 @@ export default function App() {
           setEditModalLocker(null);
         }}
         onSave={handleSaveLocker}
+        onDelete={handleDeleteLocker}
       />
 
       {/* 4. Locker Details & History Modal */}
@@ -327,6 +339,7 @@ export default function App() {
         onAssign={(l) => setAssignModalLocker(l)}
         onReturn={(l) => setReturnModalLocker(l)}
         onPrintReceipt={(l) => setReceiptModalLocker(l)}
+        onDelete={handleDeleteLocker}
       />
 
       {/* 5. Delivery Receipt / Termo Modal (Printable) */}

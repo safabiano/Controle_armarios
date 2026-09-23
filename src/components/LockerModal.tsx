@@ -5,7 +5,8 @@ import {
   MapPin, 
   FileText, 
   CheckCircle2, 
-  AlertCircle 
+  AlertCircle,
+  Trash2
 } from 'lucide-react';
 import { Locker, LockerStatus, VestiarioType } from '../types';
 
@@ -14,13 +15,15 @@ interface LockerModalProps {
   lockerToEdit: Locker | null;
   onClose: () => void;
   onSave: (lockerData: Partial<Locker>) => void;
+  onDelete?: (lockerId: string) => void;
 }
 
 export const LockerModal: React.FC<LockerModalProps> = ({
   isOpen,
   lockerToEdit,
   onClose,
-  onSave
+  onSave,
+  onDelete
 }) => {
   const [number, setNumber] = useState('');
   const [vestiario, setVestiario] = useState<VestiarioType>('MASCULINO');
@@ -215,6 +218,20 @@ export const LockerModal: React.FC<LockerModalProps> = ({
 
           {/* Footer Actions */}
           <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+            {isEditing && onDelete && (
+              <button
+                type="button"
+                id="btn-modal-delete-locker"
+                onClick={() => {
+                  onDelete(lockerToEdit.id);
+                  onClose();
+                }}
+                className="mr-auto inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors border border-rose-200"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                Excluir Armário
+              </button>
+            )}
             <button
               type="button"
               onClick={onClose}

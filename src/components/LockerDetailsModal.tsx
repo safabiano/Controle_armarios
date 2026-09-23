@@ -13,7 +13,8 @@ import {
   Wrench,
   Printer,
   Clock,
-  MapPin
+  MapPin,
+  Trash2
 } from 'lucide-react';
 import { Locker } from '../types';
 import { formatDateBR } from '../utils/lockerUtils';
@@ -25,6 +26,7 @@ interface LockerDetailsModalProps {
   onAssign: (locker: Locker) => void;
   onReturn: (locker: Locker) => void;
   onPrintReceipt: (locker: Locker) => void;
+  onDelete?: (lockerId: string) => void;
 }
 
 export const LockerDetailsModal: React.FC<LockerDetailsModalProps> = ({
@@ -33,7 +35,8 @@ export const LockerDetailsModal: React.FC<LockerDetailsModalProps> = ({
   onClose,
   onAssign,
   onReturn,
-  onPrintReceipt
+  onPrintReceipt,
+  onDelete
 }) => {
   if (!isOpen || !locker) return null;
 
@@ -298,7 +301,22 @@ export const LockerDetailsModal: React.FC<LockerDetailsModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3.5 border-t border-slate-100 flex items-center justify-end bg-slate-50/50">
+        <div className="px-6 py-3.5 border-t border-slate-100 flex items-center justify-between bg-slate-50/50">
+          {onDelete ? (
+            <button
+              type="button"
+              id="btn-details-delete-locker"
+              onClick={() => {
+                onDelete(locker.id);
+                onClose();
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors border border-rose-200"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              Excluir Armário
+            </button>
+          ) : <div />}
+
           <button
             type="button"
             onClick={onClose}

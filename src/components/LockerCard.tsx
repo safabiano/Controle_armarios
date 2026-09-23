@@ -139,6 +139,15 @@ export const LockerCard: React.FC<LockerCardProps> = ({
               >
                 <Edit3 className="w-3.5 h-3.5" />
               </button>
+              <button
+                type="button"
+                id={`btn-delete-locker-${locker.id}`}
+                onClick={() => onDelete(locker.id)}
+                className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors"
+                title="Excluir armário"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
 
